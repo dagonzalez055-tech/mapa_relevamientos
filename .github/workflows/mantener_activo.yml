@@ -1,11 +1,9 @@
-# Una vez por día hace una consulta real a Supabase para que el proyecto gratuito no se pause por inactividad.
-# Necesita dos "secrets" en GitHub (Settings > Secrets and variables > Actions): SUPABASE_URL y SUPABASE_KEY.
 name: Mantener activo Supabase
 
 on:
   schedule:
-    - cron: "17 11 * * *"      # todos los días, 11:17 UTC (8:17 en Salta)
-  workflow_dispatch: {}         # permite probarlo a mano desde la pestaña Actions
+    - cron: "17 11 * * *"
+  workflow_dispatch: {}
 
 jobs:
   ping:
@@ -17,7 +15,7 @@ jobs:
           SUPABASE_KEY: ${{ secrets.SUPABASE_KEY }}
         run: |
           set -e
-          if [ -z "$SUPABASE_URL" ] || [ -z "$SUPABASE_KEY" ]; then echo "Faltan los secrets SUPABASE_URL / SUPABASE_KEY"; exit 1; fi
+          if [ -z "$SUPABASE_URL" ] || [ -z "$SUPABASE_KEY" ]; then echo "Faltan los secrets"; exit 1; fi
           AUTH=()
           case "$SUPABASE_KEY" in eyJ*) AUTH=(-H "Authorization: Bearer $SUPABASE_KEY");; esac
           curl -fsS --retry 3 -X POST "$SUPABASE_URL/rest/v1/rpc/ping" \
