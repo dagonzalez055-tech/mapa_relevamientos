@@ -1,0 +1,16 @@
+# Secretos: NUNCA se suben a GitHub
+.streamlit/secrets.toml
+
+# Datos cargados a mano: viven en Supabase, no en el repositorio
+datos/relevamientos.csv
+datos/observaciones.csv
+datos/informes/
+datos/zonas/
+datos/copias/
+datos/cambios_local.csv
+datos/*.copia_local
+
+# Entorno y archivos temporales
+.venv/
+__pycache__/
+*.pyc

@@ -1,0 +1,61 @@
+﻿nombre,alias,departamento,poblacion_2010,categoria,lat,lon,fuente
+Aguaray,,General José de San Martín,14788,menor,-22.24058,-63.73364,ajustada a la red (movió 573 m)
+Cafayate,,Cafayate,14850,principal,-26.07075,-65.97898,ajustada a la red (movió 391 m)
+Cerrillos,,Cerrillos,24882,menor,-24.91369,-65.48862,ajustada a la red (movió 1763 m)
+Colonia Santa Rosa,,Orán,17219,menor,-23.3951,-64.41148,subestación C. Rebaje Colonia Sta Rosa
+Embarcación,,General José de San Martín,27357,principal,-23.2101,-64.09761,ajustada a la red (movió 659 m)
+General Güemes,Güemes,General Güemes,32625,principal,-24.67027,-65.04606,ajustada a la red (movió 354 m)
+General Mosconi,Mosconi,General José de San Martín,22271,menor,-22.59672,-63.81247,ajustada a la red (movió 1464 m)
+Hipólito Yrigoyen,Tabacal,Orán,11436,menor,-23.24398,-64.27883,ajustada a la red (movió 1473 m)
+J. V. González,Joaquín V. González; Joaquin V. Gonzalez,Anta,21045,principal,-25.11831,-64.12616,ajustada a la red (movió 1312 m)
+La Merced,,Cerrillos,10907,menor,,,sin ubicar: completar lat y lon a mano
+Pichanal,,Orán,24595,menor,-23.32573,-64.22517,ajustada a la red (movió 1585 m)
+Salvador Mazza,Profesor Salvador Mazza; Pocitos,General José de San Martín,20670,menor,-22.05509,-63.68965,ajustada a la red (movió 457 m)
+Rosario de la Frontera,,Rosario de la Frontera,26174,principal,-25.80045,-64.96901,ajustada a la red (movió 396 m)
+Rosario de Lerma,,Rosario de Lerma,24922,menor,-24.98338,-65.57626,ajustada a la red (movió 1117 m)
+Salta,Salta Capital,Capital,521483,principal,-24.78426,-65.41565,ajustada a la red (movió 680 m)
+Metán,San José de Metán,Metán,29579,principal,-25.50239,-64.96853,ajustada a la red (movió 707 m)
+San Lorenzo,,Capital,14630,menor,,,sin ubicar: completar lat y lon a mano
+Orán,San Ramón de la Nueva Orán; Nueva Orán,Orán,82413,principal,-23.13456,-64.32442,ajustada a la red (movió 315 m)
+Santa Victoria Este,,Rivadavia,11188,menor,-22.27275,-62.69955,subestación EG Santa Victoria Este
+Tartagal,,General José de San Martín,69225,principal,-22.51677,-63.80017,ajustada a la red (movió 120 m)
+Aguas Blancas,,Orán,0,menor,-22.72657,-64.36156,subestación Central de Generación Aguas Blancas
+Angastaco,,San Carlos,2214,menor,,,sin ubicar: completar lat y lon a mano
+Animaná,,San Carlos,1622,menor,,,sin ubicar: completar lat y lon a mano
+Apolinario Saravia,,Anta,9054,menor,-24.35528,-63.97785,subestación ET APOLINARIO SARAVIA
+Cachi,,Cachi,5468,menor,-25.11971,-66.16677,ajustada a la red (movió 229 m)
+Campo Quijano,,Rosario de Lerma,13780,menor,-24.91054,-65.64271,ajustada a la red (movió 1112 m)
+Campo Santo,,General Güemes,7924,menor,,,sin ubicar: completar lat y lon a mano
+Chicoana,,Chicoana,9123,menor,-25.10783,-65.53199,ajustada a la red (movió 537 m)
+Coronel Moldes,,La Viña,4685,menor,-25.28191,-65.47659,ajustada a la red (movió 439 m)
+El Bordo,,General Güemes,6677,menor,,,sin ubicar: completar lat y lon a mano
+El Carril,,Chicoana,11587,menor,-25.07296,-65.4959,ajustada a la red (movió 366 m)
+El Galpón,El Galpon,Metán,8765,menor,-25.38304,-64.67691,subestación C. Rebaje El Galpon
+El Jardín,,La Candelaria,1938,menor,,,sin ubicar: completar lat y lon a mano
+El Potrero,,Rosario de la Frontera,2819,menor,,,sin ubicar: completar lat y lon a mano
+El Quebrachal,,Anta,11785,menor,,,sin ubicar: completar lat y lon a mano
+El Tala,Ruiz de los Llanos,La Candelaria,2632,menor,-25.71669,-64.83845,ajustada a la red (movió 1864 m)
+General Ballivián,,General José de San Martín,2599,menor,,,sin ubicar: completar lat y lon a mano
+General Pizarro,,Anta,4235,menor,,,sin ubicar: completar lat y lon a mano
+Guachipas,,Guachipas,3187,menor,-25.51737,-65.50899,ajustada a la red (movió 1410 m)
+Iruya,,Iruya,4234,menor,-22.7978,-65.21825,subestación EG Iruya
+Isla de Cañas,,Iruya,1753,menor,,,sin ubicar: completar lat y lon a mano
+La Caldera,,La Caldera,2769,menor,-24.61409,-65.38116,ajustada a la red (movió 1571 m)
+La Candelaria,,La Candelaria,1134,menor,,,sin ubicar: completar lat y lon a mano
+La Poma,,La Poma,1738,menor,-24.71234,-66.20902,subestación EG La Poma
+La Viña,,La Viña,2750,menor,,,sin ubicar: completar lat y lon a mano
+Las Lajitas,,Anta,11292,menor,,,sin ubicar: completar lat y lon a mano
+Los Toldos,,Santa Victoria,2182,menor,-22.28098,-64.71336,subestación EG Los Toldos
+Molinos,,Molinos,2510,menor,-25.4392,-66.29227,ajustada a la red (movió 1537 m)
+Nazareno,,Santa Victoria,2839,menor,,,sin ubicar: completar lat y lon a mano
+Payogasta,,Cachi,1847,menor,,,sin ubicar: completar lat y lon a mano
+Río Piedras,Rio Piedras,Metán,2007,menor,,,sin ubicar: completar lat y lon a mano
+Rivadavia Banda Norte,Coronel Juan Solá,Rivadavia,10323,menor,,,sin ubicar: completar lat y lon a mano
+Rivadavia Banda Sur,Rivadavia,Rivadavia,8846,menor,-24.18582,-62.88375,ajustada a la red (movió 1801 m)
+San Antonio de los Cobres,,Los Andes,5814,principal,-24.21527,-66.3167,ajustada a la red (movió 86 m)
+San Carlos,,San Carlos,3180,menor,-25.89787,-65.92946,ajustada a la red (movió 461 m)
+Santa Victoria Oeste,,Santa Victoria,5323,menor,-22.25193,-64.97176,subestación EG Santa Victoria Oeste
+Seclantás,Seclantas,Molinos,3142,menor,,,sin ubicar: completar lat y lon a mano
+Tolar Grande,,Los Andes,236,menor,,,sin ubicar: completar lat y lon a mano
+Urundel,,Orán,3175,menor,,,sin ubicar: completar lat y lon a mano
+Vaqueros,,La Caldera,4994,menor,,,sin ubicar: completar lat y lon a mano
