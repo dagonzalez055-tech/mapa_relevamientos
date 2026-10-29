@@ -373,6 +373,8 @@ grafo = datos_grafo()
 est_df, ct_df = datos_subestaciones()
 rels = lg.cargar_relevamientos()
 obs = lg.cargar_observaciones()
+if "exp_sel_nuevo" in st.session_state:               # expediente recién guardado: se elige antes de que exista el selector
+    st.session_state["exp_sel"] = st.session_state.pop("exp_sel_nuevo")
 
 if st.session_state.get("aviso"):
     st.toast(st.session_state.pop("aviso"))
@@ -1051,7 +1053,7 @@ if PUEDE_EDITAR:
                                   + (" · con PDF" if pdf is not None else ""))
                 st.session_state["aviso"] = f"Expediente {ref} guardado"
                 st.session_state["reiniciar_carga"] = True
-                st.session_state["exp_sel"] = ref
+                st.session_state["exp_sel_nuevo"] = ref
                 st.session_state["zoom_exp"] = True
                 st.rerun()
         elif not mensaje:
