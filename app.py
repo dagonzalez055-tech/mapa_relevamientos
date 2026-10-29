@@ -913,8 +913,7 @@ if PUEDE_EDITAR:
                 if "error" not in leido:
                     st.session_state["c_loc"] = leido["localidad"]
                     st.session_state["c_inf"] = leido["informe"]
-                    if leido.get("expediente") and not st.session_state.get("c_exp"):
-                        st.session_state["c_exp"] = leido["expediente"]
+                    st.session_state["c_exp"] = leido.get("expediente", "")      # siempre el del informe nuevo (vacío si no lo menciona)
                     for campo, clave in (("fecha_desde", "c_desde"), ("fecha_hasta", "c_hasta")):
                         if leido[campo]:
                             st.session_state[clave] = date.fromisoformat(leido[campo])
