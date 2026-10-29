@@ -241,9 +241,9 @@ def excel_bytes(datos: dict) -> bytes:
     ws_obs.freeze_panes = ws_obs.cell(row=H0, column=3)
     ws_obs.auto_filter.ref = f"A{H0 - 1}:J{u_obs}"
 
-    # ---- Localidades (los 60 municipios)
+    # ---- Localidades (la lista de datos/localidades.csv)
     titulo(ws_loc, "Localidades de la provincia y estado de relevamiento",
-           EMISION + " Lista: los 60 municipios de la provincia (datos/localidades.csv).")
+           EMISION + " Lista: las localidades de la provincia (datos/localidades.csv).")
     encabezados(ws_loc, H0 - 1, ["Localidad", "Departamento", "Población (censo 2010)", "Estado", "Expedientes",
                                  "Fecha de relevamiento", "Fecha de solución por EDESA", "¿Relevada?"],
                 [28, 28, 14, 36, 16, 15, 15, 12])
@@ -287,7 +287,7 @@ def excel_bytes(datos: dict) -> bytes:
         ("  Km relevados en 33 kV", f"=SUM({R}J{H0}:J{u_rel})", FMT_KM, "Suma de la hoja Relevamientos.", False),
         ("  Km relevados en 66 kV", f"=SUM({R}K{H0}:K{u_rel})", FMT_KM, "Suma de la hoja Relevamientos.", False),
         ("Observaciones registradas", f"=COUNTA(Observaciones!A{H0}:A{u_obs})" if n_obs else 0, "0", "Filas de la hoja Observaciones.", False),
-        ("Localidades de la provincia", f"=COUNTA(Localidades!A{H0}:A{u_loc})" if n_loc else 0, "0", "Los 60 municipios de la provincia (datos/localidades.csv).", False),
+        ("Localidades de la provincia", f"=COUNTA(Localidades!A{H0}:A{u_loc})" if n_loc else 0, "0", "Las localidades de la lista de la provincia (datos/localidades.csv).", False),
         ("Localidades relevadas", f'=COUNTIF(Localidades!H{H0}:H{u_loc},"Sí")', "0", "Localidades que figuran en la columna «Localidad» de algún expediente.", False),
         ("% de localidades relevadas", "=IF(B17>0,B18/B17,0)", "0.0%", "Localidades relevadas ÷ localidades de la provincia.", False),
         ("Localidades pendientes de relevamiento", "=B17-B18", "0", "Detalle en la hoja Localidades (filtrar «¿Relevada?» = No).", False),
@@ -477,7 +477,7 @@ def word_bytes(datos: dict, fecha: date, referencia: str, plantilla: Path | None
     else:
         par("No quedan localidades pendientes de relevamiento.", alinear=J, sangria=True, interlineado=1.5)
 
-    aclar = (f"Los porcentajes de localidades se calculan sobre los {res['n_loc']} municipios de la Provincia, y los de red sobre la "
+    aclar = (f"Los porcentajes de localidades se calculan sobre las {res['n_loc']} localidades de la lista de la Provincia, y los de red sobre la "
              "extracción regulatoria de EDESA (red de media tensión de 13,2, 33 y 66 kV).")
     if res["fuera_de_lista"]:
         aclar += " Se relevaron además localidades que no figuran en esa lista: " + ", ".join(res["fuera_de_lista"]) + "."

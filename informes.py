@@ -36,9 +36,40 @@ def _normalizar_tipo(d: str) -> str:
     return d[:1].upper() + d[1:] if d else d
 
 
+def _observaciones_numeradas(lineas: list[str]) -> list[dict]:
+    """Formato de anexo: «1. Sanear CT» y, debajo, el enlace de Google Maps (una observación por página)."""
+    res = []
+    i = 0
+    while i < len(lineas):
+        m = re.match(r"(\d{1,3})\s*[.)\-]\s+(\S.*)$", lineas[i])
+        if not m:
+            i += 1
+            continue
+        tipo, j = m.group(2), i + 1
+        while j < len(lineas) and not lineas[j].lower().startswith("http") and j - i <= 3 \
+                and not re.match(r"\d{1,3}\s*[.)\-]\s+\S", lineas[j]):
+            if lineas[j]:
+                tipo += " " + lineas[j]
+            j += 1
+        if j < len(lineas) and lineas[j].lower().startswith("http"):         # solo cuenta si tiene enlace: evita falsos positivos
+            enlace = lineas[j].split()[0]
+            k = j + 1
+            while k < len(lineas) and lineas[k] and " " not in lineas[k] and len(enlace) < 40 \
+                    and not re.match(r"\d{1,3}\s*[.)\-]\s+\S", lineas[k]):
+                enlace += lineas[k]
+                k += 1
+            res.append({"n": int(m.group(1)), "tipo": _normalizar_tipo(tipo), "enlace": enlace})
+            i = max(k, j + 1)
+        else:
+            i += 1
+    return res
+
+
 def observaciones(texto: str) -> list[dict]:
     """[{'n': 1, 'tipo': 'Poda en LMT', 'enlace': 'https://maps.app.goo.gl/...'}, ...]"""
     lineas = [l.strip() for l in texto.splitlines()]
+    if not any(re.match(r"Observaci[oó]n\s+\d+", l, re.I) for l in lineas):
+        return _observaciones_numeradas(lineas)
     res = []
     i = 0
     while i < len(lineas):
@@ -75,12 +106,20 @@ def _fecha(d: int, mes: str, anio: int) -> str:
 def datos_generales(texto: str) -> dict:
     """Localidad, fechas del relevamiento y referencia del informe (lo que se pueda leer)."""
     plano = re.sub(r"\s+", " ", texto)
-    out = {"localidad": "", "fecha_desde": "", "fecha_hasta": "", "informe": ""}
+    out = {"localidad": "", "fecha_desde": "", "fecha_hasta": "", "informe": "", "expediente": "", "fecha_firma": ""}
     m = re.search(r"localidad de ([A-ZÁÉÍÓÚÑ][^,.;:]*?)(?= con motivo| con el|,|\.|;| en el marco|$)", plano)
     if not m:
         m = re.search(r"Municipio de ([A-ZÁÉÍÓÚÑ][^,.;:]*?)(?=,|\.|;| con | para |$)", plano)
     if m:
         out["localidad"] = m.group(1).strip()
+    if not out["localidad"]:                     # encabezado del anexo: «... Relevamiento Media y Baja Tensión Gral. Pizarro y Luis Burela - Salta.»
+        m = re.search(r"Relevamiento\s+(?:de\s+)?(?:Media y Baja|Media|Baja)\s+Tensi[oó]n\s+(.+?)\s*-\s*Salta", plano, re.I)
+        if m:
+            out["localidad"] = re.sub(r"\bGral\.?\s", "General ", m.group(1).strip())
+    m = re.search(r"Expte\.?\s*(?:N[°º]\s*)?\d{1,4}\s*-\s*(\d{3,7})\s*/\s*\d{4}", plano, re.I)
+    out["expediente"] = m.group(1) if m else ""
+    m = re.search(r"firmado electr[oó]nicamente.*?\bel\s+(\d{1,2})/(\d{1,2})/(\d{4})", plano, re.I)
+    out["fecha_firma"] = f"{int(m.group(3)):04d}-{int(m.group(2)):02d}-{int(m.group(1)):02d}" if m else ""
     m = re.search(r"IF\s*\d+\s*-\s*GEE\s*N[°º]?\s*\d+\s*-\s*\d{4}", plano)
     if m:
         out["informe"] = re.sub(r"\s+", " ", m.group(0))
@@ -112,6 +151,12 @@ def leer_informe(contenido: bytes) -> dict:
         sin_enlace = [o["n"] for o in obs if not o["enlace"]]
         if sin_enlace:
             avisos.append(f"Observaciones sin enlace de Google Maps: {', '.join(map(str, sin_enlace))}.")
+    if not datos["fecha_desde"] and datos["fecha_firma"]:
+        datos["fecha_desde"] = datos["fecha_hasta"] = datos["fecha_firma"]
+        f = datos["fecha_firma"].split("-")
+        avisos.append(f"El informe no indica las fechas del relevamiento: se propuso la fecha de firma ({f[2]}/{f[1]}/{f[0]}). Corregila si hace falta.")
+    if datos["expediente"]:
+        avisos.append(f"El informe menciona el expediente {datos['expediente']}: se completó el número, verificalo.")
     for campo, nombre in (("localidad", "la localidad"), ("fecha_desde", "las fechas del relevamiento"), ("informe", "la referencia del informe")):
         if not datos[campo]:
             avisos.append(f"No pude leer {nombre}; completalo a mano.")

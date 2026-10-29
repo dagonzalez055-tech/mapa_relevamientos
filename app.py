@@ -911,6 +911,8 @@ if PUEDE_EDITAR:
                 if "error" not in leido:
                     st.session_state["c_loc"] = leido["localidad"]
                     st.session_state["c_inf"] = leido["informe"]
+                    if leido.get("expediente") and not st.session_state.get("c_exp"):
+                        st.session_state["c_exp"] = leido["expediente"]
                     for campo, clave in (("fecha_desde", "c_desde"), ("fecha_hasta", "c_hasta")):
                         if leido[campo]:
                             st.session_state[clave] = date.fromisoformat(leido[campo])
@@ -935,7 +937,7 @@ if PUEDE_EDITAR:
         st.session_state.setdefault("c_desde", date.today())
         st.session_state.setdefault("c_hasta", date.today())
         f1, f2, f3, f4, f5 = st.columns([1, 1.2, 1, 1, 1.6])
-        exp_nuevo = f1.text_input("N° de expediente", key="c_exp", help="No figura en el informe: hay que escribirlo.").strip()
+        exp_nuevo = f1.text_input("N° de expediente", key="c_exp", help="Se completa solo si el informe lo menciona (ej. «Expte. 267-71325/2026» → 71325); si no, hay que escribirlo.").strip()
         loc_nueva = f2.text_input("Localidad / distribuidor", key="c_loc")
         desde = f3.date_input("Relevado desde", key="c_desde", format="DD/MM/YYYY")
         hasta = f4.date_input("hasta", key="c_hasta", format="DD/MM/YYYY")
