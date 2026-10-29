@@ -439,7 +439,7 @@ def word_bytes(datos: dict, fecha: date, referencia: str, plantilla: Path | None
     par("Por medio de la presente se informa el estado de avance de los relevamientos de campo de las redes de media tensión "
         "(13,2, 33 y 66 kV) de la Provincia de Salta que realiza esta Gerencia, y el seguimiento de las adecuaciones "
         f"solicitadas a la Distribuidora EDESA S.A., al {fecha_larga(fecha)}.", alinear=J, sangria=True, interlineado=1.5)
-    par(f"A la fecha se relevaron {res['n_loc_rel']} de las {res['n_loc']} localidades (municipios) de la Provincia, "
+    par(f"A la fecha se relevaron {res['n_loc_rel']} de los {res['n_loc']} municipios de la Provincia, "
         f"lo que representa el {num(res['pct_loc'])} %, y {num(res['km_unico'])} km de los {num(res['km_total'])} km de red de "
         f"media tensión registrados, equivalentes al {num(res['pct_km'])} % de la red "
         f"({num(km_t[13.2])} km en 13,2 kV, {num(km_t[33.0])} km en 33 kV y {num(km_t[66.0])} km en 66 kV).",
@@ -462,26 +462,21 @@ def word_bytes(datos: dict, fecha: date, referencia: str, plantilla: Path | None
             else:
                 est = "Relevado, adecuaciones pendientes"
             filas.append([r.expediente, r.localidad, fechas, num(r.km13 + r.km33 + r.km66), r.n_obs, est])
-        tabla(["Expediente", "Localidad", "Relevamiento", "Km de red", "Obser-vaciones", "Estado"], filas,
+        tabla(["Expediente", "Municipio", "Relevamiento", "Km de red", "Obser-vaciones", "Estado"], filas,
               [2.0, 3.2, 3.0, 1.7, 1.9, 3.2], derecha=(3, 4))
         par("", despues=4)
 
     pend = loc[~loc["relevada"]]
     if len(pend):
-        par(f"Las {len(pend)} localidades pendientes de relevamiento, agrupadas por departamento, son:",
+        par(f"Los {len(pend)} municipios pendientes de relevamiento, agrupadas por departamento, son:",
             alinear=J, sangria=True, interlineado=1.5, juntar=True)
         filas = [[d, ", ".join(g["nombre"].sort_values())] for d, g in pend.groupby("departamento")]
         filas.sort(key=lambda f: f[0])
-        tabla(["Departamento", "Localidades pendientes"], filas, [4.2, 10.8])
+        tabla(["Departamento", "Municipios pendientes"], filas, [4.2, 10.8])
         par("", despues=4)
     else:
-        par("No quedan localidades pendientes de relevamiento.", alinear=J, sangria=True, interlineado=1.5)
+        par("No quedan municipios pendientes de relevamiento.", alinear=J, sangria=True, interlineado=1.5)
 
-    aclar = (f"Los porcentajes de localidades se calculan sobre las {res['n_loc']} localidades de la lista de la Provincia, y los de red sobre la "
-             "extracción regulatoria de EDESA (red de media tensión de 13,2, 33 y 66 kV).")
-    if res["fuera_de_lista"]:
-        aclar += " Se relevaron además localidades que no figuran en esa lista: " + ", ".join(res["fuera_de_lista"]) + "."
-    par(aclar, alinear=J, sangria=True, interlineado=1.5)
     par("Atentamente.", alinear=J, sangria=True, interlineado=1.5)
 
     buf = io.BytesIO()
@@ -514,28 +509,28 @@ def word_localidades_bytes(datos: dict, nombres: list[str], fecha: date, referen
     par([("Ref:", True), (" " + referencia, False)], alinear=J, interlineado=1.5)
     par("")
     par("Por medio de la presente se informa el estado de los relevamientos de campo de las redes de media tensión "
-        f"(13,2, 33 y 66 kV) en las {n} localidades indicadas de la Provincia de Salta y el seguimiento de las "
+        f"(13,2, 33 y 66 kV) en los {n} municipios indicados de la Provincia de Salta y el seguimiento de las "
         f"adecuaciones solicitadas a la Distribuidora EDESA S.A., al {fecha_larga(fecha)}.",
         alinear=J, sangria=True, interlineado=1.5)
     def pl(k, uno, varios):
         return f"{k} {uno if k == 1 else varios}"
     nr = n - len(sin)
-    texto = (f"{'De la localidad considerada' if n == 1 else f'De las {n} localidades consideradas'}, "
-             f"{'fue relevada' if n == 1 and nr else ('no fue relevada' if n == 1 else f'{nr} fueron relevadas')}"
+    texto = (f"{'Del municipio considerado' if n == 1 else f'De los {n} municipios considerados'}, "
+             f"{'fue relevado' if n == 1 and nr else ('no fue relevado' if n == 1 else f'{nr} fueron relevados')}"
              f"{'' if n == 1 else f' y {len(sin)} están pendientes de relevamiento'}.")
     if nr:
-        texto += (f" Entre las relevadas, en {len(eje)} EDESA ya ejecutó las adecuaciones solicitadas y "
+        texto += (f" Entre los relevados, en {len(eje)} EDESA ya ejecutó las adecuaciones solicitadas y "
                   f"en {len(pen)} permanecen pendientes de ejecución.")
     if len(rel_s):
-        texto += (f" {'El expediente que las incluye suma' if len(rel_s) == 1 else f'Los {len(rel_s)} expedientes que las incluyen suman'} "
+        texto += (f" {'El expediente que los incluye suma' if len(rel_s) == 1 else f'Los {len(rel_s)} expedientes que los incluyen suman'} "
                   f"{num(km_s)} km de red y {pl(n_obs, 'observación', 'observaciones')} "
-                  "(un expediente puede abarcar otras localidades además de las consultadas).")
+                  "(un expediente puede abarcar otros municipios además de los consultados).")
     par(texto, alinear=J, sangria=True, interlineado=1.5)
     if n:
-        par("El estado por localidad es el siguiente:", alinear=J, sangria=True, interlineado=1.5, juntar=True)
+        par("El estado por municipio es el siguiente:", alinear=J, sangria=True, interlineado=1.5, juntar=True)
         filas = [[r.nombre, r.departamento, r.estado.replace("Relevada · a", "Relevada, a"), r.expedientes or "-",
                   fecha_corta(r.fecha_relevamiento) or "-", fecha_corta(r.fecha_solucion) or "-"] for r in sel.itertuples()]
-        tabla(["Localidad", "Departamento", "Estado", "Expediente", "Relevamiento", "Solución EDESA"], filas,
+        tabla(["Municipio", "Departamento", "Estado", "Expediente", "Relevamiento", "Solución EDESA"], filas,
               [2.7, 2.9, 3.3, 2.0, 2.0, 2.1])
         par("", despues=4)
     if len(rel_s):
@@ -550,19 +545,19 @@ def word_localidades_bytes(datos: dict, nombres: list[str], fecha: date, referen
             else:
                 est = "Relevado, adecuaciones pendientes"
             filas.append([r.expediente, r.localidad, fechas, num(r.km13 + r.km33 + r.km66), r.n_obs, est])
-        tabla(["Expediente", "Localidad", "Relevamiento", "Km de red", "Obser-vaciones", "Estado"], filas,
+        tabla(["Expediente", "Municipio", "Relevamiento", "Km de red", "Obser-vaciones", "Estado"], filas,
               [2.0, 3.2, 3.0, 1.7, 1.9, 3.2], derecha=(3, 4))
         par("", despues=4)
     if len(sin):
-        par(f"Las {len(sin)} localidades pendientes de relevamiento, agrupadas por departamento, son:" if len(sin) > 1
-            else "La localidad pendiente de relevamiento es:",
+        par(f"Los {len(sin)} municipios pendientes de relevamiento, agrupadas por departamento, son:" if len(sin) > 1
+            else "El municipio pendiente de relevamiento es:",
             alinear=J, sangria=True, interlineado=1.5, juntar=True)
         filas = [[d, ", ".join(g["nombre"].sort_values())] for d, g in sin.groupby("departamento")]
         filas.sort(key=lambda f: f[0])
-        tabla(["Departamento", "Localidades pendientes"], filas, [4.2, 10.8])
+        tabla(["Departamento", "Municipios pendientes"], filas, [4.2, 10.8])
         par("", despues=4)
     elif n:
-        par("Todas las localidades consideradas fueron relevadas.", alinear=J, sangria=True, interlineado=1.5)
+        par("Todos los municipios considerados fueron relevados.", alinear=J, sangria=True, interlineado=1.5)
     par("Las cifras de red surgen de la extracción regulatoria de EDESA (red de media tensión de 13,2, 33 y 66 kV).",
         alinear=J, sangria=True, interlineado=1.5)
     par("Atentamente.", alinear=J, sangria=True, interlineado=1.5)
